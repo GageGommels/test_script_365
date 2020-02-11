@@ -3,6 +3,8 @@
 set +x
 set +e
 
+DB="debug"
+
 echo "checking for README"
 if [ ! -e "./README" ]
 then
@@ -45,7 +47,7 @@ for test_file in $(find ./tests -type f -name "*.txt" | sort); do
         echo "Testing your program"
         OUTPUT=$( echo -n "$INPUT_CASE" | $START_UP )
 
-        if [ $1 = "debug" ]
+        if [ $1 = $DB ]
         then
                 echo "Your program's output is as follows:"
                 echo "------------------------------------"
@@ -60,7 +62,7 @@ for test_file in $(find ./tests -type f -name "*.txt" | sort); do
                 echo "------------------------------------"
                 echo "FAILURE"
                 echo "------------------------------------"
-                if [ $1 = "debug" ]
+                if [ $1 = $DB ]
                 then
                         echo "$DIFF"
                 fi
