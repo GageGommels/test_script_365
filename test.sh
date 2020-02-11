@@ -45,10 +45,13 @@ for test_file in $(find ./tests -type f -name "*.txt" | sort); do
         echo "Testing your program"
         OUTPUT=$( echo -n "$INPUT_CASE" | $START_UP )
 
-        # echo "Your program's output is as follows:"
-        # echo "------------------------------------"
-        # echo "$OUTPUT"
-        # echo "------------------------------------"
+        if [ $1 = "debug" ]
+        then
+                echo "Your program's output is as follows:"
+                echo "------------------------------------"
+                echo "$OUTPUT"
+                echo "------------------------------------"
+        fi
 
         DIFF=$(diff -aBw <(echo "$OUTPUT") <(echo "$CORRECT_OUTPUT"))
         rc=$?
@@ -57,8 +60,10 @@ for test_file in $(find ./tests -type f -name "*.txt" | sort); do
                 echo "------------------------------------"
                 echo "FAILURE"
                 echo "------------------------------------"
-
-                # echo "$DIFF"
+                if [ $1 = "debug" ]
+                then
+                        echo "$DIFF"
+                fi
         else
                 echo "------------------------------------"
                 echo "SUCCESS"
